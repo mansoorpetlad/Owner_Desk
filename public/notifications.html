@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications & Operational Alerts — OwnerDesk</title>
+  
+  <!-- Bootstrap 5 & Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- OwnerDesk CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body class="page-fade-in">
+
+  <div class="app-container">
+    <div class="sidebar-backdrop"></div>
+
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <a href="/dashboard.html" class="sidebar-brand">
+        <div class="brand-icon"><i class="bi bi-shop-window"></i></div>
+        <span class="brand-text">OwnerDesk</span>
+      </a>
+
+      <nav class="sidebar-nav">
+        <div class="nav-label">Overview</div>
+        <a href="/dashboard.html" class="nav-link-item" data-nav="dashboard"><i class="bi bi-grid-1x2"></i><span>Dashboard</span></a>
+        <a href="/branches.html" class="nav-link-item" data-nav="branches"><i class="bi bi-buildings"></i><span>Branches</span></a>
+        <a href="/managers.html" class="nav-link-item" data-nav="managers"><i class="bi bi-person-badge"></i><span>Managers</span></a>
+
+        <div class="nav-label">Operations</div>
+        <a href="/sales.html" class="nav-link-item" data-nav="sales"><i class="bi bi-receipt-cutoff"></i><span>Sales</span></a>
+        <a href="/expenses.html" class="nav-link-item" data-nav="expenses"><i class="bi bi-wallet2"></i><span>Expenses</span></a>
+        <a href="/inventory.html" class="nav-link-item" data-nav="inventory"><i class="bi bi-box-seam"></i><span>Inventory</span></a>
+
+        <div class="nav-label">Management</div>
+        <a href="/reports.html" class="nav-link-item" data-nav="reports"><i class="bi bi-file-earmark-bar-graph"></i><span>Reports</span></a>
+        <a href="/notifications.html" class="nav-link-item" data-nav="notifications"><i class="bi bi-bell"></i><span>Notifications</span><span class="badge bg-danger rounded-pill ms-auto notification-unread-count d-none">0</span></a>
+        <a href="/settings.html" class="nav-link-item" data-nav="settings"><i class="bi bi-gear"></i><span>Settings</span></a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-mini-profile">
+          <div class="avatar-circle user-avatar-display">OD</div>
+          <div class="user-details">
+            <span class="user-name-text user-name-display">Loading...</span>
+            <span class="user-role-text user-role-display">OWNER</span>
+          </div>
+        </div>
+        <button class="btn btn-sm btn-icon-nav text-danger" onclick="Auth.signOut()" title="Sign Out"><i class="bi bi-box-arrow-right"></i></button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button id="sidebarToggleBtn" class="btn btn-icon-nav d-lg-none"><i class="bi bi-list fs-5"></i></button>
+          <h1 class="page-title">Operational Alerts</h1>
+        </div>
+        <div class="topbar-right">
+          <a href="/notifications.html" class="btn-icon-nav"><i class="bi bi-bell"></i><span class="notification-badge notification-unread-count d-none">0</span></a>
+          <div class="dropdown">
+            <button class="btn d-flex align-items-center gap-2 p-1 border-0" data-bs-toggle="dropdown">
+              <div class="avatar-circle user-avatar-display" style="width: 32px; height: 32px; font-size: 0.8rem;">OD</div>
+              <span class="d-none d-md-inline small fw-semibold user-name-display">Owner</span>
+              <i class="bi bi-chevron-down text-muted small"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm border">
+              <li><a class="dropdown-item small" href="/settings.html">Settings</a></li>
+              <li><button class="dropdown-item small text-danger" onclick="Auth.signOut()">Sign Out</button></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <div class="app-content">
+        <!-- Action Header -->
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-4 gap-2">
+          <div>
+            <div class="d-flex align-items-center gap-2">
+              <h2 class="h4 fw-bold mb-0">System Notifications</h2>
+              <span class="badge bg-secondary-subtle text-secondary" id="notifTotalBadge">0 Alerts</span>
+            </div>
+            <p class="text-muted small mb-0">Low stock detections, target tracking warnings, and branch status logs.</p>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-secondary" id="markAllReadBtn">
+              <i class="bi bi-check2-all me-1"></i> Mark All as Read
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="card-clean p-3 mb-4">
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary btn-sm notif-filter-btn active" data-filter="all">All Alerts</button>
+            <button class="btn btn-outline-secondary btn-sm notif-filter-btn" data-filter="unread">Unread Only</button>
+            <button class="btn btn-outline-secondary btn-sm notif-filter-btn" data-filter="critical">Critical Stockouts</button>
+          </div>
+        </div>
+
+        <!-- Notifications List -->
+        <div class="card-clean p-0 overflow-hidden">
+          <ul class="activity-list" id="notificationsList">
+            <li class="activity-item text-center py-4 text-muted">
+              <span class="spinner-border spinner-border-sm me-2"></span>Loading alerts...
+            </li>
+          </ul>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/supabase-client.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/notifications.js"></script>
+</body>
+</html>

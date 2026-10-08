@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financial Reports & Branch Analytics — OwnerDesk</title>
+  
+  <!-- Bootstrap 5 & Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- OwnerDesk CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body class="page-fade-in">
+
+  <div class="app-container">
+    <div class="sidebar-backdrop"></div>
+
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <a href="/dashboard.html" class="sidebar-brand">
+        <div class="brand-icon"><i class="bi bi-shop-window"></i></div>
+        <span class="brand-text">OwnerDesk</span>
+      </a>
+
+      <nav class="sidebar-nav">
+        <div class="nav-label">Overview</div>
+        <a href="/dashboard.html" class="nav-link-item" data-nav="dashboard"><i class="bi bi-grid-1x2"></i><span>Dashboard</span></a>
+        <a href="/branches.html" class="nav-link-item" data-nav="branches"><i class="bi bi-buildings"></i><span>Branches</span></a>
+        <a href="/managers.html" class="nav-link-item" data-nav="managers"><i class="bi bi-person-badge"></i><span>Managers</span></a>
+
+        <div class="nav-label">Operations</div>
+        <a href="/sales.html" class="nav-link-item" data-nav="sales"><i class="bi bi-receipt-cutoff"></i><span>Sales</span></a>
+        <a href="/expenses.html" class="nav-link-item" data-nav="expenses"><i class="bi bi-wallet2"></i><span>Expenses</span></a>
+        <a href="/inventory.html" class="nav-link-item" data-nav="inventory"><i class="bi bi-box-seam"></i><span>Inventory</span></a>
+
+        <div class="nav-label">Management</div>
+        <a href="/reports.html" class="nav-link-item" data-nav="reports"><i class="bi bi-file-earmark-bar-graph"></i><span>Reports</span></a>
+        <a href="/notifications.html" class="nav-link-item" data-nav="notifications"><i class="bi bi-bell"></i><span>Notifications</span><span class="badge bg-danger rounded-pill ms-auto notification-unread-count d-none">0</span></a>
+        <a href="/settings.html" class="nav-link-item" data-nav="settings"><i class="bi bi-gear"></i><span>Settings</span></a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-mini-profile">
+          <div class="avatar-circle user-avatar-display">OD</div>
+          <div class="user-details">
+            <span class="user-name-text user-name-display">Loading...</span>
+            <span class="user-role-text user-role-display">OWNER</span>
+          </div>
+        </div>
+        <button class="btn btn-sm btn-icon-nav text-danger" onclick="Auth.signOut()" title="Sign Out"><i class="bi bi-box-arrow-right"></i></button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-main">
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button id="sidebarToggleBtn" class="btn btn-icon-nav d-lg-none"><i class="bi bi-list fs-5"></i></button>
+          <h1 class="page-title">Financial & Performance Reports</h1>
+        </div>
+        <div class="topbar-right">
+          <a href="/notifications.html" class="btn-icon-nav"><i class="bi bi-bell"></i><span class="notification-badge notification-unread-count d-none">0</span></a>
+          <div class="dropdown">
+            <button class="btn d-flex align-items-center gap-2 p-1 border-0" data-bs-toggle="dropdown">
+              <div class="avatar-circle user-avatar-display" style="width: 32px; height: 32px; font-size: 0.8rem;">OD</div>
+              <span class="d-none d-md-inline small fw-semibold user-name-display">Owner</span>
+              <i class="bi bi-chevron-down text-muted small"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm border">
+              <li><a class="dropdown-item small" href="/settings.html">Settings</a></li>
+              <li><button class="dropdown-item small text-danger" onclick="Auth.signOut()">Sign Out</button></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <div class="app-content">
+        <!-- Action Header -->
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-4 gap-2">
+          <div>
+            <h2 class="h4 fw-bold mb-0">Consolidated P&amp;L Statements</h2>
+            <p class="text-muted small mb-0">Compare branch target completions, revenue margins, and operational costs.</p>
+          </div>
+          <button class="btn btn-outline-secondary" id="exportReportCsvBtn">
+            <i class="bi bi-file-earmark-spreadsheet me-1"></i> Export Performance CSV
+          </button>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="card-clean p-3 mb-4">
+          <div class="row g-2 align-items-center">
+            <div class="col-md-4">
+              <label class="form-label small text-muted">Outlet Scope</label>
+              <select id="reportBranchFilter" class="form-select">
+                <option value="all">All Outlets</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small text-muted">Start Date</label>
+              <input type="date" id="reportStartDate" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small text-muted">End Date</label>
+              <input type="date" id="reportEndDate" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <!-- Executive Financial Scorecard (6 Cards) -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-header"><span class="kpi-label">Gross Net Revenue</span><div class="kpi-icon-wrap icon-blue"><i class="bi bi-cash-stack"></i></div></div>
+            <div class="kpi-value text-primary" id="repTotalRevenue">₹0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-header"><span class="kpi-label">Total Chain Overheads</span><div class="kpi-icon-wrap icon-red"><i class="bi bi-wallet2"></i></div></div>
+            <div class="kpi-value text-danger" id="repTotalExpenses">₹0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-header"><span class="kpi-label">Net Operating Income</span><div class="kpi-icon-wrap icon-green"><i class="bi bi-graph-up-arrow"></i></div></div>
+            <div class="kpi-value text-success" id="repNetRevenue">₹0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-header"><span class="kpi-label">Total Customer Orders</span><div class="kpi-icon-wrap icon-purple"><i class="bi bi-people"></i></div></div>
+            <div class="kpi-value" id="repTotalOrders">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-header"><span class="kpi-label">Average Order Value (AOV)</span><div class="kpi-icon-wrap icon-teal"><i class="bi bi-basket"></i></div></div>
+            <div class="kpi-value" id="repAvgOrderValue">₹0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-header"><span class="kpi-label">Operating Profit Margin</span><div class="kpi-icon-wrap icon-yellow"><i class="bi bi-pie-chart"></i></div></div>
+            <div class="kpi-value" id="repProfitMargin">0%</div>
+          </div>
+        </div>
+
+        <!-- Visual Bar Chart: Revenue vs Overheads -->
+        <div class="card-clean p-3 mb-4">
+          <h6 class="fw-bold text-dark mb-1">Comparative Financial Trajectory</h6>
+          <span class="text-muted small d-block mb-3">Daily comparison of revenue vs total expenses</span>
+          <div style="height: 260px; position: relative;">
+            <canvas id="reportTrendChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Branch Performance Breakdown Table -->
+        <div class="card-clean p-0 overflow-hidden">
+          <div class="p-3 border-bottom">
+            <h6 class="fw-bold text-dark mb-0">Branch Outlet Performance Summary</h6>
+            <span class="text-muted small">P&amp;L performance and monthly target achievement rate per branch</span>
+          </div>
+          <div class="table-responsive">
+            <table class="table-clean">
+              <thead>
+                <tr>
+                  <th>Branch Outlet</th>
+                  <th>City</th>
+                  <th>Revenue</th>
+                  <th>Monthly Target</th>
+                  <th>Target Completion</th>
+                  <th>Expenses</th>
+                  <th>Net Income</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="repBranchPerformanceTableBody">
+                <tr><td colspan="8" class="text-center py-4 text-muted">Loading performance data...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/supabase-client.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/reports.js"></script>
+</body>
+</html>

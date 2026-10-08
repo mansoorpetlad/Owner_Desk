@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OwnerDesk — Centralized Multi-Outlet Restaurant Management Platform</title>
+  <meta name="description" content="Centralized B2B restaurant chain management platform for multi-outlet governance, real-time sales, inventory thresholds, and branch performance.">
+  
+  <!-- Bootstrap 5 CSS & Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- OwnerDesk CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  
+  <style>
+    .hero-section {
+      padding: 5rem 0 4rem 0;
+      background-color: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .hero-mockup-card {
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+      background: #ffffff;
+      overflow: hidden;
+      animation: heroFloat 350ms ease-out;
+    }
+    @keyframes heroFloat {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .feature-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.75rem;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      height: 100%;
+    }
+    .feature-card:hover {
+      border-color: #94a3b8;
+      transform: translateY(-2px);
+    }
+    .feature-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      margin-bottom: 1.25rem;
+    }
+  </style>
+</head>
+<body class="page-fade-in">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top py-3">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="/index.html">
+        <div class="brand-icon">
+          <i class="bi bi-shop-window"></i>
+        </div>
+        <div>
+          <span class="brand-text">OwnerDesk</span>
+          <span class="d-none d-sm-inline text-muted ms-2 small">Multi-Outlet Platform</span>
+        </div>
+      </a>
+      
+      <div class="d-flex align-items-center gap-2">
+        <a href="/login.html" class="btn btn-outline-secondary px-3">Sign In</a>
+        <a href="/register.html" class="btn btn-primary px-3">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero-section">
+    <div class="container">
+      <div class="row align-items-center gy-5">
+        <div class="col-lg-6">
+          <div class="badge bg-light text-primary border border-primary-subtle px-3 py-2 rounded-pill mb-3 fw-semibold">
+            <i class="bi bi-shield-check me-1"></i> Centralized Chain Governance
+          </div>
+          <h1 class="display-5 fw-bold text-dark lh-sm mb-3">
+            Manage Every Restaurant Outlet From One Desk
+          </h1>
+          <p class="lead text-muted mb-4 fs-6">
+            OwnerDesk gives restaurant owners a centralized view of sales, inventory, expenses, branch performance, and operational alerts across every outlet.
+          </p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="/register.html" class="btn btn-primary btn-lg px-4 fs-6">
+              Create Owner Account <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+            <a href="/login.html" class="btn btn-outline-secondary btn-lg px-4 fs-6">
+              Access Live Console
+            </a>
+          </div>
+          <div class="mt-4 pt-2 d-flex align-items-center gap-4 text-muted small">
+            <div><i class="bi bi-check2 text-success me-1"></i> Multi-Outlet Sync</div>
+            <div><i class="bi bi-check2 text-success me-1"></i> Stockout Alerts</div>
+            <div><i class="bi bi-check2 text-success me-1"></i> Direct Supabase RLS</div>
+          </div>
+        </div>
+
+        <!-- Hero Preview Mockup -->
+        <div class="col-lg-6">
+          <div class="hero-mockup-card">
+            <!-- Mockup Header -->
+            <div class="bg-light px-3 py-2 border-bottom d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-secondary-subtle text-secondary small">Live Outlets</span>
+                <span class="small fw-semibold text-dark">Consolidated Dashboard Preview</span>
+              </div>
+              <span class="status-badge badge-active">Operational</span>
+            </div>
+            <!-- Mockup Content -->
+            <div class="p-3 bg-white">
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <div class="p-2 border rounded bg-light">
+                    <div class="text-muted small">Total Chain Revenue</div>
+                    <div class="h5 fw-bold text-dark mb-0">₹4,82,500</div>
+                    <div class="small text-success"><i class="bi bi-arrow-up-right"></i> +12.4% vs last month</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="p-2 border rounded bg-light">
+                    <div class="text-muted small">Active Outlets</div>
+                    <div class="h5 fw-bold text-dark mb-0">4 / 4 Branches</div>
+                    <div class="small text-muted">Pune • Mumbai • Nashik</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Mockup Outlets List -->
+              <div class="border rounded">
+                <div class="p-2 border-bottom bg-light small fw-semibold text-muted d-flex justify-content-between">
+                  <span>Outlet</span>
+                  <span>Target Pacing</span>
+                </div>
+                <div class="p-2 border-bottom d-flex justify-content-between align-items-center small">
+                  <div>
+                    <span class="fw-semibold text-dark">Pune Central</span>
+                    <span class="text-muted d-block" style="font-size: 0.75rem;">FC Road • PC-101</span>
+                  </div>
+                  <div class="text-end">
+                    <span class="status-badge badge-active">Active</span>
+                    <span class="d-block text-muted" style="font-size: 0.75rem;">₹12.0L Target (88%)</span>
+                  </div>
+                </div>
+                <div class="p-2 border-bottom d-flex justify-content-between align-items-center small">
+                  <div>
+                    <span class="fw-semibold text-dark">Mumbai West</span>
+                    <span class="text-muted d-block" style="font-size: 0.75rem;">Bandra Linking Rd</span>
+                  </div>
+                  <div class="text-end">
+                    <span class="status-badge badge-active">Active</span>
+                    <span class="d-block text-muted" style="font-size: 0.75rem;">₹16.0L Target (94%)</span>
+                  </div>
+                </div>
+                <div class="p-2 d-flex justify-content-between align-items-center small bg-light bg-opacity-25">
+                  <div>
+                    <span class="fw-semibold text-dark">Nashik Road</span>
+                    <span class="text-muted d-block" style="font-size: 0.75rem;">College Road • Low Stock</span>
+                  </div>
+                  <div class="text-end">
+                    <span class="status-badge badge-underperforming">Under-performing</span>
+                    <span class="d-block text-muted" style="font-size: 0.75rem;">₹8.5L Target (42%)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Core Features Section -->
+  <section class="py-5">
+    <div class="container py-3">
+      <div class="text-center max-w-700 mx-auto mb-5">
+        <h2 class="fw-bold text-dark">Engineered for Chain Restaurant Owners</h2>
+        <p class="text-muted">Eliminate communication bottlenecks between individual kitchen branches and centralized executive management.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="feature-card">
+            <div class="feature-icon-box bg-primary-light text-primary border border-primary-subtle">
+              <i class="bi bi-buildings"></i>
+            </div>
+            <h5 class="fw-bold mb-2">Branch Governance</h5>
+            <p class="text-muted small mb-0">Create and oversee branches across cities. Track manager contacts, monthly revenue goals, and status updates.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="feature-card">
+            <div class="feature-icon-box bg-success-subtle text-success border border-success-subtle">
+              <i class="bi bi-graph-up"></i>
+            </div>
+            <h5 class="fw-bold mb-2">Sales Reconciliation</h5>
+            <p class="text-muted small mb-0">Daily sales reports broken down into gross revenue, discounts, tax, cash, UPI, and card payments with duplicate prevention.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="feature-card">
+            <div class="feature-icon-box bg-warning-subtle text-warning border border-warning-subtle">
+              <i class="bi bi-box-seam"></i>
+            </div>
+            <h5 class="fw-bold mb-2">Inventory Thresholds</h5>
+            <p class="text-muted small mb-0">Automated stock auditing that triggers instant warnings when key ingredients like rice, paneer, and oil run below safety minimums.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="feature-card">
+            <div class="feature-icon-box bg-danger-subtle text-danger border border-danger-subtle">
+              <i class="bi bi-pie-chart"></i>
+            </div>
+            <h5 class="fw-bold mb-2">P&L & Expense Control</h5>
+            <p class="text-muted small mb-0">Track raw materials, staff salaries, utilities, and rent. Generate accurate profit margins and export CSV sheets.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-top bg-white py-4 mt-auto">
+    <div class="container d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2 text-muted small">
+      <div>
+        <span class="fw-semibold text-dark">OwnerDesk</span> — Manage every outlet from one desk.
+      </div>
+      <div>
+        Built with Node.js, Express, Supabase PostgreSQL, and Bootstrap 5.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/supabase-client.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    // If user is already authenticated, provide quick access indicator
+    document.addEventListener('DOMContentLoaded', async () => {
+      const session = await Auth.getCurrentSession();
+      if (session) {
+        const ctaBtn = document.querySelector('.btn-primary.btn-lg');
+        if (ctaBtn) {
+          ctaBtn.textContent = 'Go to Console';
+          ctaBtn.href = '/dashboard.html';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
